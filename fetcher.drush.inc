@@ -251,6 +251,7 @@ function drush_fetcher_get($site_name = FALSE) {
         drush_log(dt('File sync failed. This commonly occurs when you do not have a database for your site. Try running again with --sql-sync'), 'error');
     }
   }
+  $site->fixPerms();
 }
 
 /**
@@ -435,8 +436,10 @@ function drush_fetcher_assemble_site_info(Array $site_info) {
  *
  */
 function _drush_fetcher_merge_configuration($site_info, $config) {
+  $site_info = (array) $site_info;
   // Merge in global configuration.
   foreach ($config as $name => $value) {
+    var_dump($site_info);
     if (!empty($site_info[$name]) && is_array($site_info[$name]) && is_array($value)) {
       $site_info[$name] = array_merge($site_info[$name], $value);
     }
