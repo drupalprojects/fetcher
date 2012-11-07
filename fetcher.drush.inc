@@ -410,6 +410,9 @@ function drush_fetcher_release() {
  * Factory function for instatiating a site object.
  */
 function drush_fetcher_get_site($site_info = array()) {
+  if (empty($site_info)) {
+    $site_info = array();
+  }
   $class = drush_get_option('fetcher-site-class', '\Fetcher\Site');
   $info = drush_fetcher_assemble_site_info($site_info);
   $site = new $class($info);
