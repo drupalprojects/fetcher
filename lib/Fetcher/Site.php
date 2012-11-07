@@ -187,6 +187,13 @@ class Site extends Pimple implements SiteInterface {
   }
 
   /**
+   * Fix the file permissions on the local site.
+   */
+  public function fixPerms() {
+    return $this['file permissions']->fixPerms();
+  }
+
+  /**
    * Calculate the drush alias path.
    */
   public function getDrushAliasPath() {
@@ -413,6 +420,14 @@ class Site extends Pimple implements SiteInterface {
 
     $this['file synchronizer'] = $this->share(function($c) {
       return new $c['file synchronizer class']($c);
+    });
+
+    // For most cases, RSync is file for file synchronizing. We'll find the
+    // path to the files via drush.
+    $this['file permissions class'] = 'Fetcher\FilePermissions\FilePerms';
+
+    $this['file permissions'] = $this->share(function($c) {
+      return new $c['file permissions class']($c);
     });
 
     // Usually set by the drush option.
