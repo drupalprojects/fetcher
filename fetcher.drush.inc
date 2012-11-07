@@ -34,6 +34,14 @@ function fetcher_drush_command() {
     ),
   );
 
+  $items['fetcher-fix-perms'] = array(
+    'description' => 'Alters the permissions and group ownership of drupal files.',
+    'aliases' => array('ffp'),
+    'arguments' => array(
+      'site' => 'The name of the site to fix perms for.',
+    ),
+  );
+
   $items['fetcher-info'] = array(
     'description' => 'List known information about a site managed by Fetcher.',
     'aliases' => array('fef'),
@@ -189,6 +197,22 @@ function drush_fetcher_create($site_name = FALSE, $version = '7') {
     drush_log($e->getMessage(), 'error');
     drush_log(dt('Something failed in site creation, consider running `drush fetcher-delete @site_name.', array('@site_name', $site_name)), 'error');
   }
+}
+
+/**
+ *
+ */
+function drush_fetcher_fix_perms($site_name) {
+  if (!$site_info = drush_fetcher_load_site_info_from_name_alias_or_context($site_name)) {
+    drush_log(dt('The site @site could not be found.', array('@site' => $site_name)), 'error');
+    return FALSE;
+  }
+  // Instantiate the site object.
+  $site = drush_fetcher_get_site($site_info);
+  if ($local_name = drush_get_option('local-name', FALSE)) {
+    $site['name'] = $local_name;
+  }
+  $site->fixPerms();
 }
 
 /**
