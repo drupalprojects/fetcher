@@ -30,6 +30,7 @@ TODO: Find a good way to expose database options as command line arguments where
   - 'mysql.binary' - The binary to use to run MySQL.  Defaults to `mysql` which must be in the inlcude path but an alternative may be set.
   - 'name' - The site's machine name.
   - 'process' - A factory for Symfony\Process objects. Used to perform system calls.
+  - 'profile' - The machine name of the Drupal profile this site uses.
   - 'random' - A closure that generates pseudo random data.  Defaults to a copy of the Drupal 7 drupal_random_bytes implementation.
   - 'server' - The server handler object for interfacing with the application server that runs Drupal (likely Apache or nginx).
   - 'server.webroot' - The folder that should contain the working directory of any fetcher working directories on an app server.

@@ -5,7 +5,7 @@ use Symfony\Component\Process\Process;
 
 class Download implements \Fetcher\CodeFetcher\SetupInterface {
 
-  private $site = FALSE; 
+  private $site = FALSE;
 
   public function __construct(\Fetcher\Site $site) {
     $this->site = $site;
@@ -18,14 +18,20 @@ class Download implements \Fetcher\CodeFetcher\SetupInterface {
 
     $site = $this->site;
 
+    $profile = 'drupal-' . $site['version'];
+    if ($site['profile'] != 'standard' && $site['profile'] != 'minimal') {
+      $profile = $site['profile'];
+    }
+
     $commandline_args = array(
-      'drupal-' . $site['version'],
+      $profile,
     );
     $commandline_options = array(
       // Default our package hander to git_drupalorg.
       //'--package-handler=' . drush_get_option('package-handler', 'git_drupalorg'),
       '--destination=' . $site['site.working_directory'],
       '--drupal-project-rename=code',
+      '--default-major=' . $site['version'],
     );
     foreach ($commandline_options as $name => $value) {
       drush_set_option($name, $value);

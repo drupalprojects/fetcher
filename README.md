@@ -9,14 +9,14 @@ existence of that folder is first tested and the path to that folder is created 
 
 ## Folder layout ##
 
-Fetcher creates a "working diredctory" with a specific layout for its uses.  That directory is laid 
+Fetcher creates a "working directory" with a specific layout for its uses.  That directory is laid
 out as follows:
 
 - public_files - The drupal pubic files directory which will be symlinked to `sites/default/files` by default.  Generally group writable and group owned by the webserver.
 - private_files - (Optional) A private file directory to be used by drupal.  Generally group writable and group owned by the webserver.
 - logs - A folder for logs with files created for `mail.log`, `access.log` and `watchdog.log`.  Logs used in development, not recommended for production.
 - code - A folder containing the actual checkout from the VCS repository.
-- releases - (Optional) 
+- releases - (Optional)
   - 1.0.1 - An example of a release folder for a tag called `1.0.1`.
 - webroot - A symlink to the Drupal root (usually the root of `/code` in this directory).
 

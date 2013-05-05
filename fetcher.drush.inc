@@ -77,6 +77,7 @@ function fetcher_drush_command() {
     'arguments' => array(
       'site_name' => 'The name of a site to create.',
       'version' => 'The version of Drupal to install (the same options that would be passed to pm-download without the `drupal-` prefix).',
+      'profile' => "The machine name of a Drupal profile to use. Defaults to 'standard'.",
     ),
     'options' => array(
       'package-handler' => 'The package handler to use for downloading drupal, defaults to drupalorg_git but any can be used that work with pm-download.',
@@ -181,7 +182,7 @@ function drush_fetcher_info($site_name = NULL) {
 /**
  * Create and install a new site.
  */
-function drush_fetcher_create($site_name = FALSE, $version = '7') {
+function drush_fetcher_create($site_name = FALSE, $version = '7', $profile = 'standard') {
 
   if (!$site_name && !$site_name = drush_fetcher_prompt_for_site_name()) {
     return;
@@ -195,11 +196,12 @@ function drush_fetcher_create($site_name = FALSE, $version = '7') {
   $site['version'] = $version;
   $site['code_fetcher.class'] = 'Fetcher\CodeFetcher\Download';
   $site['name'] = $site_name;
+  $site['profile'] = $profile;
 
   try {
     drush_fetcher_ensure_site($site);
     // Install the site
-    $commandline_args = array();
+    $commandline_args = array($profile);
     $commandline_options = array(
       'account-name' => 'admin',
       'account-pass' => 'pass',
