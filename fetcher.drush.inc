@@ -81,7 +81,7 @@ function fetcher_drush_command() {
     ),
     'options' => array(
       'package-handler' => 'The package handler to use for downloading drupal, defaults to drupalorg_git but any can be used that work with pm-download.',
-      'host-name' => NULL,
+      'hostname' => 'The hostname to use in the server config (defaults to [site_name].[hostname]).',
       'environment-local' => "The environment you are on, e.g., 'prod', 'dev'. Defaults to 'local'.",
     ),
   );
